@@ -104,6 +104,7 @@ pub fn main() void {
 
     // Look at each Food on the menu...
     const meal = food_loop: for (menu) |food| {
+        var i: usize = 0;
 
         // Now look at each required ingredient for the Food...
         for (food.requires) |required, required_ingredient| {
@@ -122,14 +123,15 @@ pub fn main() void {
             // We did not find this required ingredient, so we
             // can't make this Food. Continue the outer loop.
             if (!found) continue :food_loop;
+            i = required_ingredient;
         }
 
         // If we get this far, the required ingredients were all
         // wanted for this Food.
         //
         // Please return this Food from the loop.
-        break;
-    };
+        break menu[i];
+    } else menu[0];
     // ^ Oops! We forgot to return Mac & Cheese as the default
     // Food when the requested ingredients aren't found.
 
